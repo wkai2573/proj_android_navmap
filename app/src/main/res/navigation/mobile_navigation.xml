@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/mobile_navigation"
+  app:startDestination="@+id/nav_home">
+
+  <fragment
+    android:id="@+id/nav_home"
+    android:name="wkai.navmap.ui.home.HomeFragment"
+    android:label="@string/title_home"
+    tools:layout="@layout/fragment_home" />
+
+  <fragment
+    android:id="@+id/nav_dashboard"
+    android:name="wkai.navmap.ui.dashboard.DashboardFragment"
+    android:label="@string/title_dashboard"
+    tools:layout="@layout/fragment_dashboard" />
+
+  <fragment
+    android:id="@+id/nav_notifications"
+    android:name="wkai.navmap.ui.notifications.NotificationsFragment"
+    android:label="@string/title_notifications"
+    tools:layout="@layout/fragment_notifications" />
+
+  <fragment
+    android:id="@+id/nav_checkin"
+    android:name="wkai.navmap.ui.spot.SpotFragment"
+    android:label="@string/title_checkin"
+    tools:layout="@layout/fragment_spot" />
+</navigation>
