@@ -15,10 +15,14 @@ class HomeFragment : Fragment() {
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     binding.apply {
-      //binding component things..
+      closeBtn.setOnClickListener { requireActivity().finish() }
+      scorePlusBtn.setOnClickListener { viewModel.scorePlus(3) }
+      scoreMinusBtn.setOnClickListener { viewModel.scoreMinus(2) }
     }
     viewModel.apply {
-      text.observe(viewLifecycleOwner) { binding.textHome.text = it }
+      score.observe(viewLifecycleOwner) { newScore ->
+        binding.scoreTv.text = newScore.toString()
+      }
     }
     return binding.root
   }

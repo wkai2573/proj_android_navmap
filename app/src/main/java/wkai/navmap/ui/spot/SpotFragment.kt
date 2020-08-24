@@ -19,7 +19,7 @@ class SpotFragment : Fragment() {
   private val viewModel: SpotViewModel by lazy { ViewModelProvider(this, viewModelFactory).get(SpotViewModel::class.java) }
   private val viewModelFactory: SpotViewModelFactory by lazy { SpotViewModelFactory(spotDao) }
 
-  private val spotDao: SpotDao by lazy { DB.getInstance(requireActivity().applicationContext).viewpointDao() }
+  private val spotDao: SpotDao by lazy { DB.getInstance(requireActivity().applicationContext).spotDao() }
 
   private val adapter: SpotAdapter by lazy { SpotAdapter(spotDao) }
 
@@ -29,17 +29,19 @@ class SpotFragment : Fragment() {
     //binding
     binding.apply {
       //button
-      listOf(binding.addBtn, binding.deleteAllBtn, binding.listBtn).forEach { btn ->
+      listOf(addBtn, deleteAllBtn).forEach { btn ->
         btn.setOnClickListener { buttonEventInit(btn) }
       }
       //recyclerView
-      binding.rv.layoutManager = LinearLayoutManager(requireContext())
-      binding.rv.adapter = adapter
+      rv.layoutManager = LinearLayoutManager(requireContext())
+      rv.adapter = adapter
     }
 
     //viewModel
-    viewModel.spots.observe(viewLifecycleOwner) {
-      adapter.submitList(it)
+    viewModel.apply {
+      spots.observe(viewLifecycleOwner) {
+        adapter.submitList(it)
+      }
     }
 
     return binding.root
@@ -49,18 +51,8 @@ class SpotFragment : Fragment() {
   private fun buttonEventInit(btn: Button) {
     thread {
       when (btn) {
-        binding.addBtn -> {
-          for (i in 1..1000) {
-            spotDao.insert(Spot(place = "台北"))
-          }
-        }
+        binding.addBtn -> for (i in 1..1000) spotDao.insert(Spot(place = "台北"))
         binding.deleteAllBtn -> spotDao.deleteAll()
-        binding.listBtn -> {
-          val text = spotDao.getAll().toString()
-          activity?.runOnUiThread {
-            binding.tv.text = text
-          }
-        }
       }
     }
   }

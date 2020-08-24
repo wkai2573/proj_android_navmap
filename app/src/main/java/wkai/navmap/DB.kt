@@ -9,7 +9,7 @@ import wkai.navmap.ui.spot.SpotDao
 
 @Database(entities = [Spot::class], version = 1)
 abstract class DB : RoomDatabase() {
-  abstract fun viewpointDao(): SpotDao
+  abstract fun spotDao(): SpotDao
 
   //靜態實例
   companion object {

@@ -7,8 +7,11 @@ import androidx.room.*
 @Dao
 interface SpotDao {
   @Query("SELECT * FROM spot")
-//  fun getAll(): DataSource.Factory<Int, Spot>
   fun getAll(): LiveData<List<Spot>>
+//  fun getAll(): DataSource.Factory<Int, Spot>
+
+  @Query("SELECT * FROM spot")
+  fun getAll2(): List<Spot>
 
   @Query("SELECT * FROM spot WHERE id = :id LIMIT 1")
   fun getById(id: Int): LiveData<Spot>
@@ -17,7 +20,7 @@ interface SpotDao {
   fun getByIds(ids: IntArray): LiveData<List<Spot>>
 
 //  @Query("SELECT * FROM spot WHERE addedTime >= DATE('now', '-:days day')")
-//  fun getLastDaysRecord(days: Int): LiveData<List<Viewpoint>>
+//  fun getLastDaysRecord(days: Int): LiveData<List<Spot>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insert(vararg spot: Spot)

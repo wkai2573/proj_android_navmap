@@ -6,8 +6,14 @@ import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {
 
-  private val _text = MutableLiveData<String>().apply {
-    value = "This is home Fragment_new"
+  var score = MutableLiveData<Int>().apply { value = 0 }
+
+  fun scorePlus(_score: Int) {
+    score.value = (score.value)?.plus(_score)
   }
-  val text: LiveData<String> = _text
+
+  fun scoreMinus(_score: Int) {
+    score.value = (score.value)?.minus(_score)
+  }
+
 }

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import wkai.navmap.DB
 import wkai.navmap.databinding.ItemSpotBinding
 import kotlin.concurrent.thread
 
@@ -18,30 +19,32 @@ class SpotAdapter(private val spotDao: SpotDao) : ListAdapter<Spot, SpotAdapter.
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpotHolder {
     val layoutInflater = LayoutInflater.from(parent.context)
     val binding = ItemSpotBinding.inflate(layoutInflater, parent, false)
-    return SpotHolder(binding, this, spotDao)
+    return SpotHolder(binding, this)
   }
 
   override fun onBindViewHolder(holder: SpotHolder, position: Int) {
     val spot: Spot = getItem(position)
-    holder.bind(spot)
+    holder.bind(spot, position)
   }
 
-  class SpotHolder(private val binding: ItemSpotBinding,
-                   private val adapter: SpotAdapter,
-                   private val spotDao: SpotDao): RecyclerView.ViewHolder(binding.root) {
-    fun bind(spot: Spot) {
+  class SpotHolder(
+    private val binding: ItemSpotBinding,
+    private val adapter: SpotAdapter
+  ) : RecyclerView.ViewHolder(binding.root) {
+
+    fun bind(spot: Spot, position: Int) {
       binding.tv.text = spot.toString()
       binding.delBtn.setOnClickListener {
         thread {
-          spotDao.delete(spot)
+          DB.getInstance(it.context).spotDao().delete(spot)
         }
       }
       binding.checkInBtn.setOnClickListener {
         thread {
           spot.checkIn = !spot.checkIn
-          spotDao.update(spot)
+          DB.getInstance(it.context).spotDao().update(spot)
         }
-        adapter.notifyDataSetChanged()
+        adapter.notifyItemChanged(position)
       }
     }
   }
