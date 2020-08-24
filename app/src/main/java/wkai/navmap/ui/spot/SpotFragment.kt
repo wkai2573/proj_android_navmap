@@ -19,7 +19,7 @@ class SpotFragment : Fragment() {
   private val viewModel: SpotViewModel by lazy { ViewModelProvider(this, viewModelFactory).get(SpotViewModel::class.java) }
   private val viewModelFactory: SpotViewModelFactory by lazy { SpotViewModelFactory(spotDao) }
 
-  private val spotDao: SpotDao by lazy { DB.getInstance(requireActivity().applicationContext).viewpointDao() }
+  private val spotDao: SpotDao by lazy { DB.db(requireActivity().applicationContext).viewpointDao() }
 
   private val adapter: SpotAdapter by lazy { SpotAdapter(spotDao) }
 
