@@ -13,7 +13,8 @@ abstract class DB : RoomDatabase() {
 
   //靜態實例
   companion object {
-    fun getInstance(context: Context): DB =
+    //getInstance
+    fun db(context: Context): DB =
       Room.databaseBuilder(context, DB::class.java, "navmap").build()
   }
 }
